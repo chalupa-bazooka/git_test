@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ROCK PAPER SCISSORS</title>
+</head>
+
+<body>
+<script>
+const values1 = ["rock", "paper", "scissors"]; // this are our options
+const random1 = Math.floor(Math.random() * values1.length); // this is the way to get a random number not exceeding the array's length
+const computerChoice = values1[random1]; // this is a random option from the list
+const playerChoice = prompt("Rock, paper, or scissors?"); // now you choose
+
+function playRound (playerChoice, computerChoice) {
+  console.log(`You chose: ${playerChoice}. The machine chose: ${computerChoice}.`);
+  
+  if (playerChoice === computerChoice) {
+    console.log("It's a draw")
+  } else if (playerChoice == "rock") {
+      switch (computerChoice) {
+        case "scissors":
+              console.log("You won: your rock beats the machine's scissors!");
+              break;
+        case "paper":
+              console.log("You lost: your rock was beaten by the machine's paper!");
+              break;
+    }
+  } else if (playerChoice == "scissors") {
+      switch (computerChoice) {
+        case "paper":
+              console.log("You won: your scissors beat the machine's paper!");
+              break;
+        case "rock":
+              console.log("You lost: your scissors were beaten by the machine's rock!");
+              break;
+      }
+  } else if (playerChoice == "paper") {
+      switch (computerChoice) {
+        case "rock":
+              console.log("You won: your paper beats the machine's rock!");
+              break;
+        case "scissors":
+              console.log("You lost: your paper were beaten by the machine's scissors!");
+              break;
+    }
+}
+}
+
+playRound(playerChoice, computerChoice);
+
+</script>
+</body>
+</html>
