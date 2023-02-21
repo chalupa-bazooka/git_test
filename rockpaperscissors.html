@@ -4,50 +4,86 @@
     <meta charset="UTF-8">
     <title>ROCK PAPER SCISSORS</title>
 </head>
-
 <body>
 <script>
-const values1 = ["rock", "paper", "scissors"]; // this are our options
-const random1 = Math.floor(Math.random() * values1.length); // this is the way to get a random number not exceeding the array's length
-const computerChoice = values1[random1]; // this is a random option from the list
-const playerChoice = prompt("Rock, paper, or scissors?"); // now you choose
+const options = ["rock", "paper", "scissors"];
 
-function playRound (playerChoice, computerChoice) {
-  console.log(`You chose: ${playerChoice}. The machine chose: ${computerChoice}.`);
-  
+function getComputerChoice(){
+  const x = options[Math.floor(Math.random() * options.length)];
+  return x;
+}
+
+function checkWinner(playerChoice, computerChoice){
   if (playerChoice === computerChoice) {
-    console.log("It's a draw")
-  } else if (playerChoice == "rock") {
-      switch (computerChoice) {
-        case "scissors":
-              console.log("You won: your rock beats the machine's scissors!");
-              break;
-        case "paper":
-              console.log("You lost: your rock was beaten by the machine's paper!");
-              break;
-    }
-  } else if (playerChoice == "scissors") {
-      switch (computerChoice) {
-        case "paper":
-              console.log("You won: your scissors beat the machine's paper!");
-              break;
-        case "rock":
-              console.log("You lost: your scissors were beaten by the machine's rock!");
-              break;
-      }
-  } else if (playerChoice == "paper") {
-      switch (computerChoice) {
-        case "rock":
-              console.log("You won: your paper beats the machine's rock!");
-              break;
-        case "scissors":
-              console.log("You lost: your paper were beaten by the machine's scissors!");
-              break;
-    }
-}
+    return "draw";
+  }
+  else if (
+      (playerChoice == "rock" && computerChoice == "scissors") ||
+      (playerChoice == "scissors" && computerChoice == "paper") ||
+      (playerChoice == "paper" && computerChoice == "rock")
+  ) {
+    return "player";
+  }
+  else {
+    return "machine";
+  }
 }
 
-playRound(playerChoice, computerChoice);
+function playRound(playerChoice, computerChoice){
+  const result1 = checkWinner(playerChoice, computerChoice);
+  if (result1 == "draw") {
+    return "It's a draw!"
+  }
+  else if (result1 == "player") {
+    return `You win! Your ${playerChoice} beats the machine's ${computerChoice}`
+  }
+  else {
+    return `You lose! The machine's ${computerChoice} beats your ${playerChoice}`
+  }
+} 
+
+function getPlayerChoice(){
+  let validatedInput = false;
+  while(validatedInput == false){
+    const choice = prompt("Rock, paper, or scissors?");
+    if (choice == null) {
+      continue;
+    }
+    const choiceInLower = choice.toLowerCase();
+    if(options.includes(choiceInLower)){
+      validatedInput = true;
+      return choiceInLower;
+    }
+  }
+}
+
+function game(){
+  let scorePlayer = 0;
+  let scoreComputer = 0;
+  for (let i = 0; i < 5; i++) {
+    const playerChoice1 = getPlayerChoice();
+    const computerChoice1 = getComputerChoice();
+    console.log(`Round ${i+1}`)
+    console.log(playRound(playerChoice1, computerChoice1));
+    if (checkWinner(playerChoice1, computerChoice1) == "player"){
+      scorePlayer++
+    }
+    else if (checkWinner(playerChoice1, computerChoice1) == "machine"){
+      scoreComputer++
+    }
+  }
+  if (scorePlayer > scoreComputer){
+    console.log("GAME OVER. Player wins");
+  }
+  else if (scorePlayer < scoreComputer) {
+    console.log("GAME OVER. Machine wins");
+  }
+  else {
+    console.log("GAME OVER. The game has drawn!");
+  }
+}
+
+game();
 
 </script>
 </body>
