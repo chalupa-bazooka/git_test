@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ROCK PAPER SCISSORS</title>
+</head>
+<body>
+<script>
+const options = ["rock", "paper", "scissors"];
+
+function getComputerChoice(){
+  const x = options[Math.floor(Math.random() * options.length)];
+  return x;
+}
+
+function checkWinner(playerChoice, computerChoice){
+  if (playerChoice === computerChoice) {
+    return "draw";
+  }
+  else if (
+      (playerChoice == "rock" && computerChoice == "scissors") ||
+      (playerChoice == "scissors" && computerChoice == "paper") ||
+      (playerChoice == "paper" && computerChoice == "rock")
+  ) {
+    return "player";
+  }
+  else {
+    return "machine";
+  }
+}
+
+function playRound(playerChoice, computerChoice){
+  const result1 = checkWinner(playerChoice, computerChoice);
+  if (result1 == "draw") {
+    return "It's a draw!"
+  }
+  else if (result1 == "player") {
+    return `You win! Your ${playerChoice} beats the machine's ${computerChoice}`
+  }
+  else {
+    return `You lose! The machine's ${computerChoice} beats your ${playerChoice}`
+  }
+} 
+
+function getPlayerChoice(){
+  let validatedInput = false;
+  while(validatedInput == false){
+    const choice = prompt("Rock, paper, or scissors?");
+    if (choice == null) {
+      continue;
+    }
+    const choiceInLower = choice.toLowerCase();
+    if(options.includes(choiceInLower)){
+      validatedInput = true;
+      return choiceInLower;
+    }
+  }
+}
+
+function game(){
+  let scorePlayer = 0;
+  let scoreComputer = 0;
+  for (let i = 0; i < 5; i++) {
+    const playerChoice1 = getPlayerChoice();
+    const computerChoice1 = getComputerChoice();
+    console.log(`Round ${i+1}`)
+    console.log(playRound(playerChoice1, computerChoice1));
+    if (checkWinner(playerChoice1, computerChoice1) == "player"){
+      scorePlayer++
+    }
+    else if (checkWinner(playerChoice1, computerChoice1) == "machine"){
+      scoreComputer++
+    }
+  }
+  if (scorePlayer > scoreComputer){
+    console.log("GAME OVER. Player wins");
+  }
+  else if (scorePlayer < scoreComputer) {
+    console.log("GAME OVER. Machine wins");
+  }
+  else {
+    console.log("GAME OVER. The game has drawn!");
+  }
+}
+
+game();
+
+</script>
+</body>
+</html>
